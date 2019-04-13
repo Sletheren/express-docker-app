@@ -30,7 +30,7 @@ deploy:
   script:
     - bash scripts/deploy_heroku.sh
   on:
-    branch: heroku
+    branch: staging
 # Deployment to DockerHub
 deploy:
   provider: script
