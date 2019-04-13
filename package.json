@@ -1,0 +1,22 @@
+{
+  "name": "express-docker-app",
+  "version": "1.0.0",
+  "description": "Express app built with Docker and Travis CI",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node ./src/index.js",
+    "test": "mocha --exit --timeout 1000"
+  },
+  "keywords": [],
+  "author": "Abdo Rakhma",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
+    "mocha": "^6.1.3"
+  }
+}

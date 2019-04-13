@@ -1,0 +1,35 @@
+sudo: required
+language: node_js
+node_js:
+  - "8"
+services:
+  - docker
+install:
+  # install deps
+  - docker build -t rakhma/express-docker-app:latest .
+  - docker run -d --name express-docker-app rakhma/express-docker-app
+script:
+  - docker exec -ti rakhma/express-docker-app npm run test
+after_script:
+  - docker stop express-docker-app
+deploy:
+  #specify the provider 
+  provider: elasticbeanstalk
+  #specify the region where the provider is present, You can get this from the AWS ElasticBeanstalk dashboard
+  region: "us-east-2"
+  #Specify the application name in AWS elastic beanstalk
+  app: "express-docker-app"
+  #Specify the environment name in AWS elastic beanstalk
+  env: "ExpressDockerApp-env"
+  #Specify the Bucket name which is the name of the S3 (storage) which is created as part of Elastic beanstalk in AWS
+  bucket_name: "elasticbeanstalk-us-east-2-736607720718"
+  #specify the path of the Bucket , this will be similar to the App name above
+  bucket_path: "express-docker-app"
+  #specify when you want to deploy (we want to deploy only when we push code to master branch)
+  on:
+    branch: master
+  #Specify the Environment variable name from which Travis can get the ACCESS_KEY to AWS
+  access_key_id: $AWS_ID
+  #Specify the Environment variable name from which Travis can get the SECRET_KEY to AWS
+  secret_access_key:
+    secure: "$AWS_PASSWORD"
