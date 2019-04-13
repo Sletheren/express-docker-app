@@ -10,7 +10,8 @@ install:
 script:
   - docker exec -ti $IMAGE_NAME npm run test
 after_script:
-  - docker stop $IMAGE_NAME
+  - echo 'Done, now deploying'
+# Deployment to AWS
 deploy:
   provider: elasticbeanstalk
   on:
@@ -23,3 +24,19 @@ deploy:
   access_key_id: $AWS_ID
   secret_access_key:
     secure: "$AWS_PASSWORD"
+# Deployment to Heroku
+deploy:
+  provider: script
+  script:
+    - bash scripts/deploy_heroku.sh
+  on:
+    branch: heroku
+# Deployment to DockerHub
+deploy:
+  provider: script
+  script:
+    - bash scripts/deploy_dockerhub.sh
+  on:
+    branch: dockerhub
+after_deploy:
+  - docker stop $IMAGE_NAME
