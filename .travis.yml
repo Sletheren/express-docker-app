@@ -13,30 +13,29 @@ after_script:
   - echo 'Done, now deploying'
 # Deployment to AWS
 deploy:
-  provider: elasticbeanstalk
-  on:
-    branch: master
-  region: "us-east-2"
-  app: "express-docker-app"
-  env: "ExpressDockerApp-env"
-  bucket_name: "elasticbeanstalk-us-east-2-736607720718"
-  bucket_path: "express-docker-app"
-  access_key_id: $AWS_ID
-  secret_access_key:
-    secure: "$AWS_PASSWORD"
-# Deployment to Heroku
-deploy:
-  provider: script
-  script:
-    - bash scripts/deploy_heroku.sh
-  on:
-    branch: heroku
-# Deployment to DockerHub
-deploy:
-  provider: script
-  script:
-    - bash scripts/deploy_dockerhub.sh
-  on:
-    branch: dockerhub
+  #Deployment to AWS
+  - provider: elasticbeanstalk
+    region: "us-east-2"
+    app: "express-docker-app"
+    env: "ExpressDockerApp-env"
+    bucket_name: "elasticbeanstalk-us-east-2-736607720718"
+    bucket_path: "express-docker-app"
+    access_key_id: $AWS_ID
+    secret_access_key:
+      secure: "$AWS_PASSWORD"
+    on:
+      branch: master
+  #Deployment to Heroku
+  - provider: script
+    script:
+      - bash scripts/deploy_heroku.sh
+    on:
+      branch: staging
+  #Deployment to DockerHub
+  - provider: script
+    script:
+      - bash scripts/deploy_dockerhub.sh
+    on:
+      branch: dockerhub
 after_deploy:
   - docker stop $IMAGE_NAME
