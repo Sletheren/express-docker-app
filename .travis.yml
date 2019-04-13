@@ -5,12 +5,12 @@ node_js:
 services:
   - docker
 install:
-  - docker build -t rakhma/$IMAGE_NAME:latest .
-  - docker run -d --name $IMAGE_NAME rakhma/$IMAGE_NAME
+  - docker build -t $DOCKER_USERNAME/$IMAGE_NAME:latest .
+  - docker run -d --name $IMAGE_NAME $DOCKER_USERNAME/$IMAGE_NAME
 script:
   - docker exec -ti $IMAGE_NAME npm run test
 after_script:
-  - echo 'Done, now deploying'
+  - echo 'Done, all looks good folks!'
 # Deployment to AWS
 deploy:
   #Deployment to AWS
