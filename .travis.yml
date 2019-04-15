@@ -4,14 +4,16 @@ node_js:
   - "8"
 services:
   - docker
+branches:
+  only:
+    - staging
+    - dockerhub
+    - master
 install:
   - docker build -t $DOCKER_USERNAME/$IMAGE_NAME:latest .
   - docker run -d --name $IMAGE_NAME $DOCKER_USERNAME/$IMAGE_NAME
 script:
   - docker exec -ti $IMAGE_NAME npm run test
-after_script:
-  - echo 'Done, all looks good folks!'
-# Deployment to AWS
 deploy:
   #Deployment to AWS
   - provider: elasticbeanstalk
@@ -39,3 +41,5 @@ deploy:
       branch: dockerhub
 after_deploy:
   - docker stop $IMAGE_NAME
+after_script:
+  - echo 'Done, all looks good folks!'
