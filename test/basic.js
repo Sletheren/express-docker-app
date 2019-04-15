@@ -8,7 +8,7 @@ let should = chai.should();
 chai.use(chaiHttp);
 
 describe('/GET', () => {
-    it('it should say hello', (done) => {
+    it('Returns a 200 status code', (done) => {
       chai.request(server)
           .get('/')
           .end((err, res) => {
