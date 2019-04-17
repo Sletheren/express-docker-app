@@ -16,7 +16,7 @@ app.get('/',function(req,res) {
 
 if(!module.parent){
   app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Serverss is running on port ${PORT}`);
   });
 }
 
